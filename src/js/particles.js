@@ -10,7 +10,7 @@ particlesJS("particles-js", {
             }
         },
         "color": {
-            "value": "#b84419"
+            "value": "#04b962"
         },
         "shape": {
             "type": "circle",
@@ -110,4 +110,5 @@ particlesJS("particles-js", {
     },
     "retina_detect": true
 });
+
 

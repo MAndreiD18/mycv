@@ -1,3 +1,8 @@
+import $ from 'jquery';
+// create global $ and jQuery variables
+global.$ = global.jQuery = $;
+import GLightbox from 'glightbox';
+
 (function () {
     "use strict";
 
@@ -80,8 +85,10 @@
         const headerScrolled = () => {
             if (window.scrollY > 100) {
                 selectHeader.classList.add('header-scrolled')
+                document.getElementById('img-fluid').src = 'images/logo.png';
             } else {
                 selectHeader.classList.remove('header-scrolled')
+                document.getElementById('img-fluid').src = 'images/logo-color.png';
             }
         }
         window.addEventListener('load', headerScrolled)
@@ -156,6 +163,7 @@
      * Intro type effect
      */
 
+   setTimeout(function(){
     const typed = select('.typed')
     if (typed) {
         let typed_strings = typed.getAttribute('data-typed-items')
@@ -168,48 +176,14 @@
             backDelay: 2000
         });
     }
-
+},2000);
     /**
      * Initiate portfolio lightbox 
      */
-    // const portfolioLightbox = GLightbox({
-    //   selector: '.portfolio-lightbox'
-    // });
+    const portfolioLightbox = GLightbox({
+        selector: '.portfolio-lightbox'
+    });
 
-    /**
-     * Testimonials slider
-     */
-    // new Swiper('.testimonials-slider', {
-    //   speed: 600,
-    //   loop: true,
-    //   autoplay: {
-    //     delay: 5000,
-    //     disableOnInteraction: false
-    //   },
-    //   slidesPerView: 'auto',
-    //   pagination: {
-    //     el: '.swiper-pagination',
-    //     type: 'bullets',
-    //     clickable: true
-    //   }
-    // });
-
-    /**
-     * Portfolio details slider
-     */
-    // new Swiper('.portfolio-details-slider', {
-    //   speed: 400,
-    //   loop: true,
-    //   autoplay: {
-    //     delay: 5000,
-    //     disableOnInteraction: false
-    //   },
-    //   pagination: {
-    //     el: '.swiper-pagination',
-    //     type: 'bullets',
-    //     clickable: true
-    //   }
-    // });
 
     /**
      * Preloader
@@ -221,9 +195,57 @@
         });
     }
 
-    /**
-     * Initiate Pure Counter 
-     */
-    // new PureCounter();
 
-})()
+
+    // Validare
+    const forms = document.querySelectorAll('.requires-validation')
+    Array.from(forms)
+        .forEach(function (form) {
+            form.addEventListener('submit', function (event) {
+                if (!form.checkValidity()) {
+                    event.preventDefault()
+                    event.stopPropagation()
+                }
+
+                form.classList.add('was-validated')
+            }, false)
+        });
+
+    // Enable Dark Mode!
+    let toggleSwitch = document.getElementById('darkModeIcon');
+    let currentTheme = localStorage.getItem('theme');
+
+    if (currentTheme && currentTheme === 'dark') {
+        document.documentElement.setAttribute('data-bs-theme', 'dark');
+        toggleSwitch.classList.add('bi-moon');
+        toggleSwitch.classList.remove('bi-sun');
+    }
+    else {
+        document.documentElement.setAttribute('data-bs-theme', 'light');
+        toggleSwitch.classList.remove('bi-moon');
+        toggleSwitch.classList.add('bi-sun');
+        localStorage.setItem('theme', 'light');
+    }
+
+    function switchTheme(e) {
+        currentTheme = localStorage.getItem('theme');
+        this.classList.toggle('bi-moon');
+        this.classList.toggle('bi-sun');
+        if (currentTheme && currentTheme === 'dark') {
+            document.documentElement.setAttribute('data-bs-theme', 'light');
+            localStorage.setItem('theme', 'light');
+
+        }
+        else {
+            document.documentElement.setAttribute('data-bs-theme', 'dark');
+            localStorage.setItem('theme', 'dark');
+        }
+    }
+    toggleSwitch.addEventListener('click', switchTheme, false);
+
+
+
+
+})();
+
+

@@ -1,7 +1,5 @@
 
-import $ from 'jquery';
-// create global $ and jQuery variables
-global.$ = global.jQuery = $;
+
 
 var offsetTop = $('#skills').offset().top;
 $(window).on("scroll", function () {
